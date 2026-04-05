@@ -15,17 +15,16 @@ from sklearn.metrics import accuracy_score, mean_squared_error
 # ✅ FIX 1: Never hardcode API keys. Use st.secrets or environment variables.
 # In .streamlit/secrets.toml add: GROQ_API_KEY = "your_key"
 # OR set the environment variable GROQ_API_KEY before running.
+from groq import Groq
 import os
 
+# Get API key
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
 
-# fallback for local only
-if not GROQ_API_KEY:
-    try:
-        import streamlit as st
-        GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
-    except:
-        GROQ_API_KEY = None
+# Initialize client
+client = None
+if GROQ_API_KEY:
+    client = Groq(api_key=GROQ_API_KEY)
 
 # -----------------------------------------------
 # AI EXPLANATION
